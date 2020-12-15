@@ -1,0 +1,20 @@
+version: '2.2'
+services:
+        documentation:
+                build: . 
+                environment:
+                        GIT_REPO_URL: git@github.com:AlgorexHealth/bcbsmi-documentation.git
+                        GIT_REPO_CONTENT_PATH: .
+                volumes:
+                        - /apps/docs_build:/target
+                        - ~/.ssh/id_rsa:/ssh/id_rsa
+                ports:
+                        - "9000:9000"
+        static_server:
+                image: nginx:mainline-alpine-perl
+                ports:
+                        - "9001:80"
+                volumes: 
+                        - /apps/docs_build:/usr/share/nginx/html
+
+
